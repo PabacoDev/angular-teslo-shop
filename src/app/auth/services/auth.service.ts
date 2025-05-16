@@ -3,7 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthResponse } from '@auth/interfaces/auth-response.interface';
 import { User } from '@auth/interfaces/user.interface';
-import { catchError, map, Observable, of, timer } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 type AuthStatus = 'checking' | 'authenticated' | 'non-authenticated';
@@ -41,6 +41,7 @@ export class AuthService {
       })
       .pipe(
         map((resp) => this.handleAuthSuccess(resp)),
+        tap(() => console.log(`${baseUrl}`)),
         catchError((error: any) => this.handleAuthError(error))
       );
   }
@@ -77,6 +78,9 @@ export class AuthService {
       })
       .pipe(
         map((resp) => this.handleAuthSuccess(resp)),
+        tap(() =>
+          console.log(`url: ${baseUrl} \n authStatus: ${this.authStatus()}`)
+        ),
         catchError((error: any) => this.handleAuthError(error))
       );
   }
