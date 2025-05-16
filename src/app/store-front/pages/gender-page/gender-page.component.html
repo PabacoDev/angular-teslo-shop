@@ -1,0 +1,8 @@
+<h1>{{gender()}}</h1>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mt-2 gap-3">
+
+  @for (product of productsResource.value()?.products; track product.id) {
+  <product-card [product]="product" />
+  }
+</div>
+<pagination [pages]="productsResource.value()?.pages ?? 0" />
