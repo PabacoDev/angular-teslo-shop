@@ -8,7 +8,6 @@ import { delay, forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 import { Product } from '../interfaces/product.interface';
 import { User } from '@auth/interfaces/auth-response.interface';
-import { formatCurrency, formatDate } from '@angular/common';
 
 const baseUrl = environment.baseUrl;
 
@@ -57,6 +56,7 @@ export class ProductsService {
       })
       .pipe(
         tap((resp) => console.log(resp)),
+        tap((resp) => console.log(`${baseUrl}`)),
         tap((resp) => this.productsCache.set(key, resp))
       );
   }
